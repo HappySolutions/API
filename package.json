@@ -9,9 +9,14 @@
   "author": "Heba Mohammed",
   "license": "ISC",
   "dependencies": {
+    "config": "^3.0.1",
+    "debug": "^4.1.1",
     "express": "^4.16.4",
+    "helmet": "^3.15.1",
     "joi": "^14.3.1",
     "jslint": "^0.12.1",
+    "mongoose": "^5.4.14",
+    "morgan": "^1.9.1",
     "nodemon": "^1.18.10"
   }
 }
