@@ -18,7 +18,10 @@ const Product = mongoose.model('Product', new mongoose.Schema({
         minlength: 5,
         maxlength: 50
       },
-    Pro_Price: Number,
+    Pro_Price: {
+      type: Number,
+      required: true
+  },
     Pro_IMG: {
         type: String,
         minlength: 5,
