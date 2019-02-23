@@ -7,6 +7,8 @@ const express = require('express');
 const app = express();
 const products = require('./routes/products');
 const orders = require('./routes/orders');
+const cartOrders = require('./routes/cartOrders');
+const customers = require('./routes/customers');
 const home = require('./routes/home');
 // const logger = require('./middleware/logger');
 // const authenticator = require('./middleware/authenticator');
@@ -16,6 +18,8 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static('public'));
 app.use('/api/Products', products);
 app.use('/api/Orders', orders);
+app.use('/api/CartOrders', cartOrders);
+app.use('/api/Customers', customers);
 app.use('/', home);
 //Connecting to mongoose
 mongoose.connect('mongodb://localhost/Sweets')

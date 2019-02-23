@@ -26,12 +26,13 @@ router.post('/', async (req , res) => {
 
     //create the new Product
     let newCartOrder = new CartOrder({ 
-        Name: req.body.Name,
-        Address: req.body.Address,
-        City: req.body.City,
-        Phone: req.body.Phone,
-        Payment: req.body.Payment,
-        OrderPrice: req.body.OrderPrice
+        Pro_Name: req.body.Pro_Name,
+        Pro_Category: req.body.Pro_Category,
+        Pro_Description: req.body.Pro_Description,
+        Pro_Price: req.body.Pro_Price,
+        SelectedQuantity: req.body.SelectedQuantity,
+        SumPrice: req.body.SumPrice,
+        Pro_IMG: req.body.Pro_IMG
     });
 
     newCartOrder = await newCartOrder.save();
@@ -47,12 +48,13 @@ if (error) return res.status(404).send(error.details[0].message);
 
     //update the Order
     const UpdateCartdOrder = await CartOrder.findByIdAndUpdate(req.params.id, {
-        Name: req.body.Name,
-        Address: req.body.Address,
-        City: req.body.City,
-        Phone: req.body.Phone,
-        Payment: req.body.Payment,
-        OrderPrice: req.body.OrderPrice      
+        Pro_Name: req.body.Pro_Name,
+        Pro_Category: req.body.Pro_Category,
+        Pro_Description: req.body.Pro_Description,
+        Pro_Price: req.body.Pro_Price,
+        SelectedQuantity: req.body.SelectedQuantity,
+        SumPrice: req.body.SumPrice,
+        Pro_IMG: req.body.Pro_IMG
         }, {
         new: true
       });

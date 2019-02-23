@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const CartOrder = mongoose.model('CartOrder', new mongoose.Schema({
     Pro_Name: {
         type: String,
-        required: true,
         minlength: 5,
         maxlength: 50
       },
@@ -20,15 +19,12 @@ const CartOrder = mongoose.model('CartOrder', new mongoose.Schema({
       },
     Pro_Price: {
         type: Number,
-        required: true
     },
     SelectedQuantity: {
         type: Number,
-        required: true
     },
     SumPrice: {
         type: Number,
-        required: true
     },
     Pro_IMG: {
         type: String,
