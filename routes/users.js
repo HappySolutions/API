@@ -3,7 +3,7 @@ const router = express.Router();
 const {User, validate} = require('../models/users');
 const mongoose = require('mongoose');
 const _ = require('lodash');
-
+const bcrypt = require('bcrypt');
 
 
 
@@ -12,46 +12,18 @@ router.post('/', async (req , res) => {
     const {error} = validate(req.body);
     if (error) return res.status(404).send(error.details[0].message);
 
-    let user = await User.findOne({ email: req.body.email});
+    let user = await User.findOne({ Email: req.body.Email});
     if (user) return res.status(404).send('User already registered');
 
     
     //create the new User
     user = new User(_.pick(req.body, ['Name', 'Email', 'Password']));
 
+    const salt = await bcrypt.genSalt(10);
+    user.Password = await bcrypt.hash(req.body.Password, salt);
+
     await user.save();
-    res.send(    _.pick(user, ['_id', 'Name', 'Email']));
-});
-//===========================================
-
-router.put('/:id', async (req, res) => {
-//validate the Order
-const {error} = validate(req.body);
-if (error) return res.status(404).send(error.details[0].message);
-
-    //update the Order
-    const UpdateUser = await User.findByIdAndUpdate(req.params.id, {
-        Name: req.body.Name,
-        Password: req.body.Password,
-        Email: req.body.Email
-        }, {
-        new: true
-      });
-
-    //return the updated product
-    res.send(UpdateUser);
-    
-});
-//===============================================
-
-router.delete('/:id', async (req, res) => {
-    //find the Product
-    const DeletedUser = await User.findByIdAndRemove(req.params.id);
-
-    if(!DeletedUser) return res.status(404).send('genre is not found');
-
-    res.send(DeletedUser);
-
+    res.send(_.pick(user, ['_id', 'Name', 'Email']));
 });
 
 module.exports = router;
