@@ -1,4 +1,6 @@
+const Joi = require('Joi');
 const mongoose = require('mongoose');
+Joi.objectId = require('joi-objectid')(Joi);
 // const debug = require('debug')('app:startup');
 // const helmet = require('helmet');
 // const morgan = require('morgan');
@@ -9,6 +11,8 @@ const products = require('./routes/products');
 const orders = require('./routes/orders');
 const cartOrders = require('./routes/cartOrders');
 const customers = require('./routes/customers');
+const categories = require('./routes/categories');
+const users = require('./routes/users');
 const home = require('./routes/home');
 // const logger = require('./middleware/logger');
 // const authenticator = require('./middleware/authenticator');
@@ -20,6 +24,9 @@ app.use('/api/Products', products);
 app.use('/api/Orders', orders);
 app.use('/api/CartOrders', cartOrders);
 app.use('/api/Customers', customers);
+app.use('/api/Categories', categories);
+app.use('/api/Users', users);
+
 app.use('/', home);
 //Connecting to mongoose
 mongoose.connect('mongodb://localhost/Sweets')

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {Product, validate} = require('../models/products');
+const {Category} = require('../models/categories')
 const mongoose = require('mongoose');
 
 
@@ -24,17 +25,23 @@ router.post('/', async (req , res) => {
     const {error} = validate(req.body);
     if (error) return res.status(404).send(error.details[0].message);
 
+    const category = await Category.findById(req.body.CategoryId);
+    if(!category) return res.status(404).send('Invalide Category');
+
     //create the new Product
-    let newProduct = new Product({ 
+    const newProduct = new Product({ 
         Pro_Name: req.body.Pro_Name,
-        Pro_Category: req.body.Pro_Category,
+        Category: {
+            _id: category.id,
+            CategoryName: category.CategoryName
+        },
+        numberInStock: req.body.numberInStock,
         Pro_Description: req.body.Pro_Description,
         Pro_Price: req.body.Pro_Price,
         Pro_IMG: req.body.Pro_IMG
-
     });
 
-    newProduct = await newProduct.save();
+    await newProduct.save();
      
     res.send(newProduct);
 });
@@ -49,6 +56,7 @@ if (error) return res.status(404).send(error.details[0].message);
     const UpdatedProduct = await Product.findByIdAndUpdate(req.params.id, {
         Pro_Name: req.body.Pro_Name,
         Pro_Category: req.body.Pro_Category,
+        numberInStock: req.body.numberInStock,
         Pro_Description: req.body.Pro_Description,
         Pro_Price: req.body.Pro_Price,
         Pro_IMG: req.body.Pro_IMG        

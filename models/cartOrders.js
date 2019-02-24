@@ -1,48 +1,53 @@
 const Joi = require('Joi');
 const mongoose = require('mongoose');
-
-const CartOrder = mongoose.model('CartOrder', new mongoose.Schema({
-    Pro_Name: {
+Joi.objectId = require('joi-objectid')(Joi);
+const CartOrder = mongoose.model('CartOrder', new mongoose.Schema({  
+  customer: {
+    type: new mongoose.Schema({
+      UserName: {
         type: String,
+        require: true,
+        minlength: 3,
+        maxlength: 50
+      }
+    }),
+    required:true
+  },
+  product: {
+    type: new mongoose.Schema({
+      Pro_Name: {
+        type: String,
+        required: true,
         minlength: 5,
         maxlength: 50
       },
-    Pro_Category: {
-        type: String,
-        minlength: 3,
-        maxlength: 50
-      },
-    Pro_Description: {
+      Pro_Description: {
         type: String,
         minlength: 5,
         maxlength: 50
       },
     Pro_Price: {
-        type: Number,
-    },
-    SelectedQuantity: {
-        type: Number,
-    },
-    SumPrice: {
-        type: Number,
-    },
+      type: Number,
+      required: true
+      },
     Pro_IMG: {
         type: String,
         minlength: 5,
         maxlength: 50
       }
+    }),
+    require: true
+  },
+    SelectedQuantity: {
+        type: Number,
+    }
   }));
   
   function validateCartOrder(cartOrder) {
     const schema = {
-        Pro_Name: Joi.string().min(3).required(),
-        Pro_Category: Joi.string(),
-        Pro_Description: Joi.string(),
-        Pro_Price: Joi.number(),
-        SelectedQuantity: Joi.number(),
-        SumPrice: Joi.number(),
-        Pro_IMG: Joi.string()
-  
+      customerId: Joi.objectId().min(3).required(),
+      productId: Joi.objectId().min(3).required(),
+      SelectedQuantity: Joi.number(),
     };
   
     return Joi.validate(cartOrder, schema);

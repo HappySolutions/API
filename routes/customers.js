@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {Customer, validate} = require('../models/cartOrders');
+const {Customer, validate} = require('../models/customers');
 const mongoose = require('mongoose');
 
 
@@ -25,7 +25,7 @@ router.post('/', async (req , res) => {
     if (error) return res.status(404).send(error.details[0].message);
 
     //create the new Product
-    let newCustomer = new Customre({ 
+    let newCustomer = new Customer({ 
         UserName: req.body.UserName,
         Password: req.body.Password,
         Email: req.body.Email,

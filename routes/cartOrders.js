@@ -1,11 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const Fawn = require('fawn');
+const {Product} = require('../models/products');
+const {Customer} = require('../models/customers')
 const {CartOrder, validate} = require('../models/cartOrders');
 const mongoose = require('mongoose');
 
-
+Fawn.init(mongoose);
 
 router.get('/',async (req, res) =>{
+    console.log('debugg');
     const cartOrders = await CartOrder.find();
     res.send(cartOrders);
 });
@@ -24,20 +28,49 @@ router.post('/', async (req , res) => {
     const {error} = validate(req.body);
     if (error) return res.status(404).send(error.details[0].message);
 
+    const customer = await Customer.findById(req.body.customerId);
+    if (!customer) return res.status(404).send('Invalide Customer');
+
+    const product = await Product.findById(req.body.productId);
+    if (!product) return res.status(404).send('Invalide Product');
+
+    if (product.numberInStock === 0) return res.status(400).send('Product not in stock.');
+
     //create the new Product
     let newCartOrder = new CartOrder({ 
-        Pro_Name: req.body.Pro_Name,
-        Pro_Category: req.body.Pro_Category,
-        Pro_Description: req.body.Pro_Description,
-        Pro_Price: req.body.Pro_Price,
+        customer:{
+            _id: customer._id,
+            UserName: customer.UserName,
+            Email: customer.Email,
+            Phone: customer.Phone
+        },
+        product:{
+            _id: product._id,
+            Pro_Name: product.Pro_Name,
+            Pro_Price: product.Pro_Price
+        },
         SelectedQuantity: req.body.SelectedQuantity,
-        SumPrice: req.body.SumPrice,
-        Pro_IMG: req.body.Pro_IMG
     });
 
-    newCartOrder = await newCartOrder.save();
-     
-    res.send(newCartOrder);
+    if(req.body.SelectedQuantity <= product.numberInStock){
+    try{
+        new Fawn.Task()
+            .save('cartorders', newCartOrder)
+            .update('products', { _id: product._id}, {
+                $inc: { numberInStock: -req.body.SelectedQuantity}
+            })
+            .run();
+    
+        res.send(newCartOrder);
+    }
+    catch(ex)
+    {
+        res.status(500).send('Somthing Faild');
+    }
+}
+else{
+    res.status(500).send("Stock is not enough for this order");
+}
 });
 //===========================================
 
@@ -48,13 +81,18 @@ if (error) return res.status(404).send(error.details[0].message);
 
     //update the Order
     const UpdateCartdOrder = await CartOrder.findByIdAndUpdate(req.params.id, {
-        Pro_Name: req.body.Pro_Name,
-        Pro_Category: req.body.Pro_Category,
-        Pro_Description: req.body.Pro_Description,
-        Pro_Price: req.body.Pro_Price,
+        customer:{
+            _id: customer._id,
+            UserName: customer.UserName,
+            Email: customer.Email,
+            Phone: customer.Phone
+        },
+        product:{
+            _id: product._id,
+            Pro_Name: product.Pro_Name,
+            Pro_Price: product.Pro_Price
+        },
         SelectedQuantity: req.body.SelectedQuantity,
-        SumPrice: req.body.SumPrice,
-        Pro_IMG: req.body.Pro_IMG
         }, {
         new: true
       });
