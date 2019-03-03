@@ -34,7 +34,7 @@ app.use('/', home);
 // }
 
 //Connecting to mongoose
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/Sweets')
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/Sweets', { useNewUrlParser: true })
 .then(() => console.log('Connecting to Database...^-^'))
 .catch((err) => console.error('Could not connect to Database'));
 
