@@ -1,6 +1,6 @@
-// const Joi = require('Joi');
+const Joi = require('Joi');
 const mongoose = require('mongoose');
-// Joi.objectId = require('joi-objectid')(Joi);
+Joi.objectId = require('joi-objectid')(Joi);
 // const helmet = require('helmet');
 // const morgan = require('morgan');
 const config = require('config');
