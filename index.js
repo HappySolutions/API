@@ -1,6 +1,3 @@
-import { env, mongo, port, ip, apiRoot } from './config'
-
-
 const Joi = require('Joi');
 const mongoose = require('mongoose');
 Joi.objectId = require('joi-objectid')(Joi);
@@ -37,7 +34,7 @@ app.use('/', home);
 // }
 
 //Connecting to mongoose
-mongoose.connect(mongo.uri)
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/Sweets')
 .then(() => console.log('Connecting to Database...^-^'))
 .catch((err) => console.error('Could not connect to Database'));
 
