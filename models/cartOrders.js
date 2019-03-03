@@ -1,4 +1,4 @@
-const Joi = require('Joi');
+const Joi = require('joi');
 const mongoose = require('mongoose');
 Joi.objectId = require('joi-objectid')(Joi);
 const CartOrder = mongoose.model('CartOrder', new mongoose.Schema({  
