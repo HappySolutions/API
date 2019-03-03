@@ -37,6 +37,7 @@ app.use('/', home);
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/Sweets', { useNewUrlParser: true })
 .then(() => console.log('Connecting to Database...^-^'))
 .catch((err) => console.error('Could not connect to Database'));
+mongoose.set('useCreateIndex', true);
 
 //using specific midleware function on specific env
 // if(app.get('env') === 'development'){
