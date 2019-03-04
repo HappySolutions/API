@@ -35,7 +35,7 @@ router.post('/',authen ,async (req , res) => {
 });
 //===========================================
 
-router.put('/:id', async (req, res) => {
+router.put('/:id',authen , async (req, res) => {
 
     
 //validate the Order
@@ -55,7 +55,7 @@ if (error) return res.status(404).send(error.details[0].message);
 });
 //===============================================
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',authen , async (req, res) => {
     //find the Product
     const DeletedCategory = await Category.findByIdAndRemove(req.params.id);
 
