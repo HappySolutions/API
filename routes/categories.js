@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {Category, validate} = require('../models/categories');
 const mongoose = require('mongoose');
-
+const authen = require('../middleware/authen');
 
 
 router.get('/',async (req, res) =>{
@@ -20,7 +20,7 @@ router.get('/:id',async (req, res) =>{
 });
 
 //============================
-router.post('/', async (req , res) => {
+router.post('/',authen ,async (req , res) => {
     const {error} = validate(req.body);
     if (error) return res.status(404).send(error.details[0].message);
 
@@ -36,6 +36,8 @@ router.post('/', async (req , res) => {
 //===========================================
 
 router.put('/:id', async (req, res) => {
+
+    
 //validate the Order
 const {error} = validate(req.body);
 if (error) return res.status(404).send(error.details[0].message);

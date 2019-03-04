@@ -39,11 +39,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/Sweets', { useN
 .catch((err) => console.error('Could not connect to Database'));
 mongoose.set('useCreateIndex', true);
 
-//using specific midleware function on specific env
-// if(app.get('env') === 'development'){
-//     app.use(morgan('tiny'));
-//     debug('Morgan is enebled...')
-// }
+
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
