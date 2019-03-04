@@ -12,16 +12,16 @@ const config = require('config');
 
 router.post('/', async (req , res) => {
     const {error} = validate(req.body);
-    if (error) return res.status(404).send(error.details[0].message);
+    if (error) return res.status(400).send(error.details[0].message);
 
     let user = await User.findOne({ Email: req.body.Email });
-    if (!user) return res.status(404).send('Invalide email or password');
+    if (!user) return res.status(400).send('Invalide email or password');
 
     const validPassword = await bcrypt.compare(req.body.Password, user.Password);
-    if(!validPassword) return res.status(404).send('Invalide email or password');
+    if(!validPassword) return res.status(400).send('Invalide email or password');
 
-    // const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));
-    const token = jwt.sign({ _id: user._id}, 'jwtPrivateKey');
+    const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));
+    // const token = jwt.sign({ _id: user._id}, 'jwtPrivateKey');
 
     res.send(token);
 });

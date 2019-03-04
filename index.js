@@ -28,10 +28,10 @@ app.use('/api/Auth', auth);
 
 app.use('/', home);
 
-// if (!config.get('jwtPrivateKey')) {
-//     console.error('Fatal error. JWT is not defined');
-//     process.exit(1);
-// }
+if (!config.get('jwtPrivateKey')) {
+    console.error('Fatal error. JWT is not defined');
+    process.exit(1);
+}
 
 //Connecting to mongoose
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/Sweets', { useNewUrlParser: true })
