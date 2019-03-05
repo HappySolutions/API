@@ -5,7 +5,7 @@ const {Category} = require('../models/categories')
 const mongoose = require('mongoose');
 const authen = require('../middleware/authen');
 
-import { getProd } from '../controllers/products'
+const { getProd } = require ('../controllers/products')
 
 
 router.get('/', getProd());
