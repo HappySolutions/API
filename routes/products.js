@@ -8,7 +8,8 @@ const authen = require('../middleware/authen');
 const { getProd } = require ('../controllers/products')
 
 
-router.get('/', getProd());
+router.get('/', query(),
+getProd);
 
 //============================
 router.get('/:id',async (req, res) =>{
