@@ -5,12 +5,10 @@ const {Category} = require('../models/categories')
 const mongoose = require('mongoose');
 const authen = require('../middleware/authen');
 
+import { getProd } from '../controllers/products'
 
 
-router.get('/',async (req, res) =>{
-    const products = await Product.find();
-    res.send(products);
-});
+router.get('/', getProd());
 
 //============================
 router.get('/:id',async (req, res) =>{
