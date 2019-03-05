@@ -14,6 +14,14 @@ async function getProdByID (req, res) {
     res.send(product);
 }
 
+async function getProdByCat (req, res) {     
+    const product = await Product.find(req.params.Pro_Name);
+
+    if(!product) return res.status(404).send('Product with given ID is not found');
+    
+    res.send(product);
+}
+
 async function createProd (req, res) {     
     const {error} = validate(req.body);
     if (error) return res.status(404).send(error.details[0].message);
@@ -74,3 +82,4 @@ exports.getProdByID = getProdByID;
 exports.createProd = createProd;
 exports.updateProd = updateProd;
 exports.deleteProd = deleteProd;
+exports.getProdByCat = getProdByCat;

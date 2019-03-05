@@ -3,13 +3,16 @@ const router = express.Router();
 
 const authen = require('../middleware/authen');
 
-const { getProd, getProdByID, createProd, updateProd,  deleteProd} = require ('../controllers/products')
+const { getProd, getProdByID, createProd, updateProd,  deleteProd, getProdByCat} = require ('../controllers/products')
 
 
 router.get('/', getProd);
 
 //============================
 router.get('/:id', getProdByID);
+
+//============================
+router.get('/:Pro_Name', getProdByCat);
 
 //============================
 router.post('/',authen , createProd);
