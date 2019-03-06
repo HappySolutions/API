@@ -13,17 +13,17 @@ async function getProdByID (req, res) {
     
     res.send(product);
 }
-///////////////////////////////
+
 async function getProdByCat (req, res) { 
-    // var productCategory = Category.Pro_Category.CategoryName;
+    var productCategory = req.params.catName;
     // var query = { 'Category.CategoryName' : req.params.query };    
-    const product = await Product.find( { 'Category.CategoryName' : 'Cakes' });
+    const product = await Product.find( { 'Category.CategoryName' : productCategory });
 
     if(!product) return res.status(404).send('Product on given Category is not found');
     
     res.send(product);
 }
-//////////////////////////////////////////
+
 async function createProd (req, res) {     
     const {error} = validate(req.body);
     if (error) return res.status(404).send(error.details[0].message);
