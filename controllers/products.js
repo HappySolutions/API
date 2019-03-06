@@ -1,29 +1,26 @@
 const {Product, validate} = require('../models/products');
 const {Category} = require('../models/categories')
 
-async function getProd (req, res, next) {     
+async function getProd (req, res) {     
         const products = await Product.find();
         res.send(products);
-        next();
 }
 
-async function getProdByID (req, res, next) {     
+async function getProdByID (req, res) {     
     const product = await Product.findById(req.params.id);
 
     if(!product) return res.status(404).send('Product with given ID is not found');
     
     res.send(product);
-    next();
 }
 ///////////////////////////////
-async function getProdByCat (req, res, next) { 
+async function getProdByCat (req, res) { 
     var query = { numberInStock : 5 };    
     const product = await Product.find(req.query);
 
     if(!product) return res.status(404).send('Product with given ID is not found');
     
     res.send(product);
-    next();
 }
 //////////////////////////////////////////
 async function createProd (req, res) {     
