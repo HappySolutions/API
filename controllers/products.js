@@ -13,16 +13,16 @@ async function getProdByID (req, res) {
     
     res.send(product);
 }
-
+///////////////////////////////
 async function getProdByCat (req, res) { 
-    var query = req.param('test Product');    
-    const product = await Product.find({Pro_Name: query});
+    var query = { Pro_Name: req.params.Pro_Name };    
+    const product = await Product.find(query).select('-_id');
 
     if(!product) return res.status(404).send('Product with given ID is not found');
     
     res.send(product);
 }
-
+//////////////////////////////////////////
 async function createProd (req, res) {     
     const {error} = validate(req.body);
     if (error) return res.status(404).send(error.details[0].message);
