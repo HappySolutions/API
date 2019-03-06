@@ -12,8 +12,8 @@ const cartOrders = require('./routes/cartOrders');
 const customers = require('./routes/customers');
 const categories = require('./routes/categories');
 const users = require('./routes/users');
-const auth = require('./routes/auth');
-const home = require('./routes/home');
+// const auth = require('./routes/auth');
+// const home = require('./routes/home');
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -24,9 +24,8 @@ app.use('/api/CartOrders', cartOrders);
 app.use('/api/Customers', customers);
 app.use('/api/Categories', categories);
 app.use('/api/Users', users);
-app.use('/api/Auth', auth);
-
-app.use('/', home);
+// app.use('/api/Auth', auth);
+// app.use('/', home);
 
 if (!config.get('jwtPrivateKey')) {
     console.error('Fatal error. JWT is not defined');
