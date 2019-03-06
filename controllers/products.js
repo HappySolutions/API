@@ -15,7 +15,7 @@ async function getProdByID (req, res) {
 }
 
 async function getProdByCat (req, res) { 
-    var query = req.body.numberInStock;    
+    var query = req.params.numberInStock;    
     const product = await Product.findOne({query});
 
     if(!product) return res.status(404).send('Product with given ID is not found');
