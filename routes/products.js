@@ -6,13 +6,13 @@ const authen = require('../middleware/authen');
 const { getProd, getProdByID, createProd, updateProd,  deleteProd, getProdByCat} = require ('../controllers/products')
 
 
-router.get('/', getProd);
+// router.get('/', getProd);
 
 //============================
 router.get('/:id', getProdByID);
 
 //============================
-router.get('/get', getProdByCat);
+router.get('/', getProdByCat);
 
 //============================
 router.post('/',authen , createProd);
