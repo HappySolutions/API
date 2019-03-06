@@ -26,7 +26,6 @@ async function createUser (req, res) {
 async function getCurrentUser (req, res) { 
     const user = await User.findById(req.user._id).select('-Password');
     res.send(user);
-
 }
 
 
