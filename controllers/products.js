@@ -15,7 +15,7 @@ async function getProdByID (req, res) {
 }
 ///////////////////////////////
 async function getProdByCat (req, res) { 
-    var query = { CategoryId : '5c7d236aa862a10017ff54e0' };    
+    var query = { CategoryName : 'Western' };    
     const product = await Product.find(query);
 
     if(!product) return res.status(404).send('Product with given ID is not found');
