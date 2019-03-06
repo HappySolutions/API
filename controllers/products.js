@@ -15,7 +15,7 @@ async function getProdByID (req, res) {
 }
 
 async function getProdByCat (req, res) { 
-    var productCategory = req.params.catName;
+    var productCategory = req.headers.catName;
     // var query = { 'Category.CategoryName' : req.params.query };    
     const product = await Product.find( { 'Category.CategoryName' : productCategory });
 
