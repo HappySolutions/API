@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { getCustomers, getCustomerByID, createCustomer, updateCustomer,  deleteCustomer } = require ('../controllers/products')
+const { getCustomers, getCustomerByID, createCustomer, updateCustomer,  deleteCustomer } = require ('../controllers/customers')
 
 
 router.get('/', getCustomers);
