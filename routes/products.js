@@ -12,7 +12,7 @@ const { getProd, getProdByID, createProd, updateProd,  deleteProd, getProdByCat}
 router.get('/:id', getProdByID);
 
 //============================///////////////
-router.get('/', getProdByCat);
+router.get('/numberInStock', getProdByCat);
 
 //============================//////////////
 router.post('/',authen , createProd);
