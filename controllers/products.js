@@ -3,8 +3,8 @@ const {Category} = require('../models/categories')
 
 async function getProd (req, res, next) {     
         const products = await Product.find();
-        res.send(products)
-        .next();
+        res.send(products);
+        next();
 }
 
 async function getProdByID (req, res, next) {     
@@ -12,17 +12,18 @@ async function getProdByID (req, res, next) {
 
     if(!product) return res.status(404).send('Product with given ID is not found');
     
-    res.send(product)
-    .next()
+    res.send(product);
+    next();
 }
 ///////////////////////////////
-async function getProdByCat (req, res) { 
+async function getProdByCat (req, res, next) { 
     var query = { numberInStock : 5 };    
-    const product = await Product.find(query);
+    const product = await Product.find(req.query);
 
     if(!product) return res.status(404).send('Product with given ID is not found');
     
     res.send(product);
+    next();
 }
 //////////////////////////////////////////
 async function createProd (req, res) {     
