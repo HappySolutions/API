@@ -14,10 +14,36 @@ async function getProdByID (req, res) {
     res.send(product);
 }
 
-async function getProdByCat (req, res) { 
-    var productCategory = req.headers.catName;
-    // var query = { 'Category.CategoryName' : req.params.query };    
-    const product = await Product.find( { 'Category.CategoryName' : productCategory });
+async function getWesternProd (req, res) { 
+ 
+    const product = await Product.find( { 'Category.CategoryName' : 'Western' });
+
+    if(!product) return res.status(404).send('Product on given Category is not found');
+    
+    res.send(product);
+}
+
+async function getOrientalProd (req, res) { 
+ 
+    const product = await Product.find( { 'Category.CategoryName' : 'Oriental' });
+
+    if(!product) return res.status(404).send('Product on given Category is not found');
+    
+    res.send(product);
+}
+
+async function getBastryProd (req, res) { 
+ 
+    const product = await Product.find( { 'Category.CategoryName' : 'Bastry' });
+
+    if(!product) return res.status(404).send('Product on given Category is not found');
+    
+    res.send(product);
+}
+
+async function getCakesProd (req, res) { 
+ 
+    const product = await Product.find( { 'Category.CategoryName' : 'Cakes' });
 
     if(!product) return res.status(404).send('Product on given Category is not found');
     
@@ -84,4 +110,7 @@ exports.getProdByID = getProdByID;
 exports.createProd = createProd;
 exports.updateProd = updateProd;
 exports.deleteProd = deleteProd;
-exports.getProdByCat = getProdByCat;
+exports.getWesternProd = getWesternProd;
+exports.getOrientalProd = getOrientalProd;
+exports.getBastryProd = getBastryProd;
+exports.getCakesProd = getCakesProd;
