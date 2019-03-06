@@ -1,17 +1,19 @@
 const {Product, validate} = require('../models/products');
 const {Category} = require('../models/categories')
 
-async function getProd (req, res) {     
+async function getProd (req, res, next) {     
         const products = await Product.find();
-        res.send(products);
+        res.send(products)
+        .next();
 }
 
-async function getProdByID (req, res) {     
+async function getProdByID (req, res, next) {     
     const product = await Product.findById(req.params.id);
 
     if(!product) return res.status(404).send('Product with given ID is not found');
     
-    res.send(product);
+    res.send(product)
+    .next()
 }
 ///////////////////////////////
 async function getProdByCat (req, res) { 
