@@ -15,10 +15,11 @@ async function getProdByID (req, res) {
 }
 ///////////////////////////////
 async function getProdByCat (req, res) { 
-    var query = { CategoryName : 'Western' };    
+    var productCategory = Category.Pro_Category.CategoryName;
+    var query = { productCategory : 'Cakes' };    
     const product = await Product.find(query);
 
-    if(!product) return res.status(404).send('Product with given ID is not found');
+    if(!product) return res.status(404).send('Product on given Category is not found');
     
     res.send(product);
 }

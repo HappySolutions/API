@@ -5,15 +5,15 @@ const authen = require('../middleware/authen');
 
 const { getProd, getProdByID, createProd, updateProd,  deleteProd, getProdByCat} = require ('../controllers/products')
 
-//============================///////////////
-router.get('/numberInStock', getProdByCat);
 
-//============================//////////////
+router.get('/Cakes', getProdByCat);
+
+//============================
 router.get('/', getProd);
 
 //============================
 router.get('/:id', getProdByID);
-
+//============================
 
 router.post('/',authen , createProd);
 //===========================================
