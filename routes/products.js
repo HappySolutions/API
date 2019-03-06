@@ -12,7 +12,7 @@ router.get('/', getProd);
 router.get('/:id', getProdByID);
 
 //============================
-router.get('/', getProdByCat);
+router.get('/:numberInStock', getProdByCat);
 
 //============================
 router.post('/',authen , createProd);
