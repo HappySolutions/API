@@ -81,4 +81,3 @@ exports.getCustomerByID = getCustomerByID;
 exports.createCustomer = createCustomer;
 exports.updateCustomer = updateCustomer;
 exports.deleteCustomer = deleteCustomer;
-exports.logCustomer = logCustomer;
