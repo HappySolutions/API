@@ -23,7 +23,7 @@ async function logCustomer (req, res) {
     const validPassword = await bcrypt.compare(req.body.Password, customer.Password);
     if(!validPassword) return res.status(400).send('Invalide email or password');
 
-    const token = newCustomer.generateAuthToken();
+    const token = customer.generateAuthToken();
 
     res.header('x-auth-token', token).send(customer);
 }
