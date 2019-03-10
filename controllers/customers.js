@@ -39,7 +39,7 @@ async function createCustomer (req, res) {
     newCustomer = new Customer(_.pick(req.body, ['UserName', 'Email', 'Password', 'Phone', 'Address']));
 
     const salt = await bcrypt.genSalt(10);
-    user.Password = await bcrypt.hash(req.body.Password, salt);
+    newCustomer.Password = await bcrypt.hash(req.body.Password, salt);
 
     await newCustomer.save();
 
