@@ -10,7 +10,7 @@ router.get('/', getCustomers);
 router.get('/:id', getCustomerByID);
 
 //============================
-router.post('/Login', logCustomer);
+router.post('/', logCustomer);
 //===============================
 router.post('/', createCustomer);
 //===========================================
