@@ -26,7 +26,7 @@ async function createAuth (req, res) {
 
     const token = customer.generateAuthToken();
 
-    res.header('x-auth-token', token).send(_.pick(customer, ['_id', 'Name', 'Email']));
+    res.header('x-auth-token', token).send(_.pick(customer, ['_id', 'UserName', 'Email']));
 }
 
 function validate(req) {
