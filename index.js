@@ -1,8 +1,7 @@
+require(express-async-errors);
 const Joi = require('joi');
 const mongoose = require('mongoose');
 Joi.objectId = require('joi-objectid')(Joi);
-// const helmet = require('helmet');
-// const morgan = require('morgan');
 const config = require('config');
 const express = require('express');
 const app = express();
@@ -13,7 +12,7 @@ const customers = require('./routes/customers');
 const categories = require('./routes/categories');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
-// const home = require('./routes/home');
+const home = require('./routes/home');
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -25,7 +24,7 @@ app.use('/api/Customers', customers);
 app.use('/api/Categories', categories);
 app.use('/api/Users', users);
 app.use('/api/Auth', auth);
-// app.use('/', home);
+app.use('/', home);
 
 if (!config.get('jwtPrivateKey')) {
     console.error('Fatal error. JWT is not defined');

@@ -1,4 +1,7 @@
 const {Customer, validate} = require('../models/customers');
+const _ = require('lodash');
+const bcrypt = require('bcrypt');
+
 
 async function getCustomers (req, res) {     
     const customers = await Customer.find();
@@ -13,22 +16,46 @@ async function getCustomerByID (req, res) {
     res.send(customers);
 }
 
+async function logCustomer (req, res) {     
+    const customer = await Customer.findOne({ Email: req.body.Email});
+    if (!customer) return res.status(404).send('Invalide email or password');
+    
+    const validPassword = await bcrypt.compare(req.body.Password, customer.Password);
+    if(!validPassword) return res.status(400).send('Invalide email or password');
+
+    const token = newCustomer.generateAuthToken();
+
+    res.header('x-auth-token', token).send(customer);
+}
+
 async function createCustomer (req, res) {     
     const {error} = validate(req.body);
     if (error) return res.status(404).send(error.details[0].message);
 
-    //create the new Product
-    let newCustomer = new Customer({ 
-        UserName: req.body.UserName,
-        Password: req.body.Password,
-        Email: req.body.Email,
-        Phone: req.body.Phone,
-        Address: req.body.Address,
-    });
+    let customer = await Customer.findOne({ Email: req.body.Email});
+    if (customer) return res.status(404).send('Customer already registered Please SignIn');
 
-    newCustomer = await newCustomer.save();
+    //create the new Customer
+    newCustomer = new Customer(_.pick(req.body, ['UserName', 'Email', 'Password', 'Phone', 'Address']));
+
+    const salt = await bcrypt.genSalt(10);
+    user.Password = await bcrypt.hash(req.body.Password, salt);
+
+    await newCustomer.save();
+
+
+    res.send(_.pick(newCustomer, ['_id', 'Name', 'Email', 'Phone', 'Address']));
+    // let newCustomer = new Customer({ 
+    //     UserName: req.body.UserName,
+    //     Password: req.body.Password,
+    //     Email: req.body.Email,
+    //     Phone: req.body.Phone,
+    //     Address: req.body.Address,
+    // });
+
+    // newCustomer = await newCustomer.save();
      
-    res.send(newCustomer);
+    // res.send(newCustomer);
 }
 
 async function updateCustomer (req, res) {     
@@ -66,3 +93,4 @@ exports.getCustomerByID = getCustomerByID;
 exports.createCustomer = createCustomer;
 exports.updateCustomer = updateCustomer;
 exports.deleteCustomer = deleteCustomer;
+exports.logCustomer = logCustomer;
