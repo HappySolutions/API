@@ -12,8 +12,6 @@ router.get('/:id', getCustomerByID);
 //============================
 router.post('/', createCustomer);
 //===========================================
-router.post('/Login', logCustomer);
-//===============================
 router.put('/:id', updateCustomer);
 //===============================================
 

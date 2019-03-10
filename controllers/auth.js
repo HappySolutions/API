@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const {User} = require('../models/users');
+const {Customer} = require('../models/customers');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
 
@@ -8,15 +8,25 @@ async function createAuth (req, res) {
     const {error} = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
-    let user = await User.findOne({ Email: req.body.Email });
-    if (!user) return res.status(400).send('Invalide email or password');
+    // let user = await Customer.findOne({ Email: req.body.Email });
+    // if (!user) return res.status(400).send('Invalide email or password');
 
-    const validPassword = await bcrypt.compare(req.body.Password, user.Password);
+    // const validPassword = await bcrypt.compare(req.body.Password, user.Password);
+    // if(!validPassword) return res.status(400).send('Invalide email or password');
+
+    // const token = user.generateAuthToken();
+
+    // res.send(token);
+
+    let customer = await Customer.findOne({ Email: req.body.Email});
+    if (!customer) return res.status(404).send('Invalide email or password');
+    
+    const validPassword = await bcrypt.compare(req.body.Password, customer.Password);
     if(!validPassword) return res.status(400).send('Invalide email or password');
 
-    const token = user.generateAuthToken();
+    const token = customer.generateAuthToken();
 
-    res.send(token);
+    res.header('x-auth-token', token).send(_.pick(customer, ['_id', 'Name', 'Email']));
 }
 
 function validate(req) {

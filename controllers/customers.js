@@ -16,18 +16,6 @@ async function getCustomerByID (req, res) {
     res.send(customers);
 }
 
-async function logCustomer (req, res) {     
-    const customer = await Customer.findOne({ Email: req.body.Email});
-    if (!customer) return res.status(404).send('Invalide email or password');
-    
-    const validPassword = await bcrypt.compare(req.body.Password, customer.Password);
-    if(!validPassword) return res.status(400).send('Invalide email or password');
-
-    const token = customer.generateAuthToken();
-
-    res.header('x-auth-token', token).send(_.pick(customer, ['_id', 'Name', 'Email']));
-}
-
 async function createCustomer (req, res) {     
     const {error} = validate(req.body);
     if (error) return res.status(404).send(error.details[0].message);
