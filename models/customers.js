@@ -21,13 +21,13 @@ customerSchema = new mongoose.Schema({
     }
     });
 
-const Customer = mongoose.model('Customer', customerSchema);
+    customerSchema.methods.generateAuthToken = function(){
+      const token = jwt.sign({ _id: this._id}, config.get('jwtPrivateKey'));
+      return token
+    }
 
-      customerSchema.methods.generateAuthToken = function(){
-        const token = jwt.sign({ _id: this._id}, config.get('jwtPrivateKey'));
-        return token
-      }
-  
+    const Customer = mongoose.model('Customer', customerSchema);
+
   function validateCustomer(customer) {
     const schema = {
         UserName: Joi.string().min(3).required(),
