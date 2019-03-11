@@ -1,3 +1,4 @@
+// set dependencies
 require('express-async-errors');
 const Joi = require('joi');
 const mongoose = require('mongoose');
@@ -5,6 +6,7 @@ Joi.objectId = require('joi-objectid')(Joi);
 const config = require('config');
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 const products = require('./routes/products');
 const orders = require('./routes/orders');
 const cartOrders = require('./routes/cartOrders');
@@ -14,8 +16,9 @@ const users = require('./routes/users');
 const auth = require('./routes/auth');
 const home = require('./routes/home');
 
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+// enable the use of request body parsing middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 app.use('/api/Products', products);
 app.use('/api/Orders', orders);
